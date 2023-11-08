@@ -47,9 +47,9 @@ def registration():
         db.session.add(user)
         db.session.commit()
 
-        access_token = create_access_token(identity=email)
+        #access_token = create_access_token(identity=email)
 
-        return {'success': True, 'access_token': access_token}, 200
+        return {'success': True}, 200#, 'access_token': access_token}, 200
     except IntegrityError:
         db.session.rollback()
         return {'success': False}, 400
