@@ -39,7 +39,10 @@ class UserRegistration(Resource):
             )
             db.session.add(user)
             db.session.commit()
-            return {'success': True}, 200
+
+            access_token = create_access_token(identity=email)
+
+            return {'success': True, 'access_token': access_token}, 200
         except IntegrityError:
             db.session.rollback()
             return {'success': False}, 400
