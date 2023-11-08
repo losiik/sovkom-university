@@ -21,7 +21,10 @@ db.init_app(app)
 @app.route('/registration', methods=['POST', 'OPTIONS'])
 # @cross_origin()
 def registration():
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        print('адай сука json')
 
     first_name = data.get('first_name')
     last_name = data.get('last_name')
