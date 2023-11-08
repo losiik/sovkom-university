@@ -3,12 +3,16 @@ from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+cors = CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sovkom.db'
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['CORS_HEADERS'] = 'Content-Type'
 # jwt = JWTManager(app)
 
 db.init_app(app)
