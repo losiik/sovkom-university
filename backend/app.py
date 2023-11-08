@@ -18,8 +18,8 @@ jwt = JWTManager(app)
 db.init_app(app)
 
 
-@app.route('/registration', methods=['POST'])
-#@cross_origin()
+@app.route('/registration', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def registration():
     data = request.get_json()
 
