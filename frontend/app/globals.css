@@ -23,9 +23,96 @@ main {
   padding: 4rem 0;
 }
 section.l_section {
-  padding: 1rem .5rem;
+  padding: 2rem 1rem;
   box-shadow: 7px 7px 17px 2px #108EFE;
 }
-/* section:not([class]) {
-  padding: 1rem .5rem;
-} */
+section:not([class]) {
+  padding: 3rem 1rem;
+}
+.b_section_header {
+    position: relative;
+    padding-bottom: .4rem;
+    font-size: 35px;
+    font-weight: 900;
+}
+.b_section_header::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  background-color: #108EFE;
+  bottom: 0;
+  left: 0;
+}
+.b_publicSection_item {
+  width: 90%;
+  display: flex;
+  margin-top: 1rem;
+}
+.b_publicSection_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 4rem;
+}
+.b_publicItem_description {
+  font-size: 30px;
+}
+.b_publicItem_title {
+  font-size: 35px;
+}
+.b_publicItem_text {
+  margin-left: 1rem;
+}
+.b_btn_wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.b_btn_main {
+  display: block;
+  width: 75%;
+  padding: 1rem 2rem;
+  text-align: center;
+  background-color: #01379D;
+  text-decoration: none;
+  font-size: 45px;
+  font-weight: 800;
+  color: #ffffff;
+}
+.b_h1,.b_h2,.b_h3,.b_h4 {
+  font-family: inherit;
+}
+.b_h1 {
+  font-size: 55px;
+  font-weight: 800;
+}
+
+input, .b_input, textarea, select, .b_select {
+  border: 6px solid #108EFE;
+  outline: none;
+  padding: 2rem 2rem;
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 30px;
+}
+input:first-of-type, textarea:first-of-type,select:first-of-type {
+  margin-top: 2rem;
+}
+input:last-of-type, textarea:last-of-type,select:last-of-type {
+  margin-bottom: 2rem;
+}
+input::placeholder, textarea::placeholder {
+  font-size: 30px;
+  font-weight: 400;
+}
+@media screen and (min-width: 992px) {
+  .w-lg-50 {
+    width: 50%!important;
+  }
+}
+form {
+  margin: 2rem 0;
+}

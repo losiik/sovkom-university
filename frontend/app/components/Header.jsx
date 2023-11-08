@@ -9,7 +9,7 @@ export default function Header({text, name, surname}) {
 
   return (
         <header>
-            <div className="container-xl">
+            <div className="container-lg">
                 <div className="b_headerInner ">
                     <div className="b_logo_wrapper">
                         <Image src="/img/logo.svg" 
