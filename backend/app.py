@@ -19,7 +19,7 @@ db.init_app(app)
 
 
 @app.route('/registration', methods=['POST', 'OPTIONS'])
-@cross_origin()
+# @cross_origin()
 def registration():
     data = request.get_json()
 
