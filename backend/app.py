@@ -20,6 +20,7 @@ db.init_app(app)
 api = Api(app)
 
 
+@cross_origin()
 class UserRegistration(Resource):
     def post(self):
         data = request.get_json()
@@ -52,6 +53,7 @@ class UserRegistration(Resource):
             return {'success': False}, 400
 
 
+@cross_origin()
 class UserLogin(Resource):
     def post(self):
         parser = reqparse.RequestParser()
