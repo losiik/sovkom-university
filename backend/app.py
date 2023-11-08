@@ -17,11 +17,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 db.init_app(app)
 
-api = Api(app)
-
 
 @app.route('/registration', methods=['POST'])
-@cross_origin()
+#@cross_origin()
 def registration():
     data = request.get_json()
 
