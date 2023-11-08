@@ -1,0 +1,31 @@
+body {
+  color: #000000;
+}
+a:not([class]) {
+  color: inherit;
+}
+
+.b_headerInner {
+  display: flex;
+  justify-content: space-between;
+    align-items: center;  
+}
+.b_text_wrapper {
+  font-size: 25px;
+}
+.b_headerInner a {
+  text-decoration: none;
+}
+.b_right_surname a {
+  font-size: 20px;
+}
+main {
+  padding: 4rem 0;
+}
+section.l_section {
+  padding: 1rem .5rem;
+  box-shadow: 7px 7px 17px 2px #108EFE;
+}
+/* section:not([class]) {
+  padding: 1rem .5rem;
+} */
