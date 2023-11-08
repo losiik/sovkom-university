@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sovkom.db'
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CORS_HEADERS'] = 'Content-Type'
-#jwt = JWTManager(app)
+jwt = JWTManager(app)
 
 db.init_app(app)
 
