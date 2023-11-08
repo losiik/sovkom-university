@@ -25,7 +25,7 @@ def registration():
         data = request.get_json()
     except:
         print('адай сука json')
-        return {'success': True}, 200
+        return {'success': True, 'message': "ало хуйлуша, это не JSON"}, 200
 
     first_name = data.get('first_name')
     last_name = data.get('last_name')
