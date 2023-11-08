@@ -69,7 +69,7 @@ def login():
     return {'message': 'Invalid credentials'}, 401
 
 
-@app.route('/')
+@app.route('/', methods=['POST'])
 def hello_world():
     return 'Moe Flask приложение в контейнере Docker.'
 
