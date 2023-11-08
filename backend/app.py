@@ -19,13 +19,8 @@ db.init_app(app)
 
 
 @app.route('/registration', methods=['POST'])
-# @cross_origin()
 def registration():
-    try:
-        data = request.get_json()
-    except:
-        print('адай сука json')
-        return {'success': True, 'message': "ало хуйлуша, это не JSON"}, 200
+    data = request.get_json()
 
     first_name = data.get('first_name')
     last_name = data.get('last_name')
@@ -56,26 +51,17 @@ def registration():
 
 
 @app.route('/login', methods=['POST'])
-@cross_origin()
 def login():
-    parser = reqparse.RequestParser()
-    parser.add_argument('email', type=str, required=True, help='Email is required')
-    parser.add_argument('password', type=str, required=True, help='Password is required')
-    args = parser.parse_args()
+    data = request.get_json()
 
-    password = args['password']
-    email = args['email']
+    password = data.get('password')
+    email = data.get('email')
 
     user = User.query.filter_by(email=email, password=password).first()
     if user:
         access_token = create_access_token(identity=email)
         return {'access_token': access_token, 'role_id': user.role_id}
     return {'message': 'Invalid credentials'}, 401
-
-
-@app.route('/', methods=['POST'])
-def hello_world():
-    return 'Moe Flask приложение в контейнере Docker.'
 
 
 if __name__ == '__main__':
