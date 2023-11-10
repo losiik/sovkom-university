@@ -7,7 +7,7 @@ import Scripts from '../components/Scripts'
 
 export default function Login() {
     const router = useRouter()
-    const token = getCookie('token') !== undefined ? getCookie('token') : null;
+    const token = getCookie('Token') !== undefined ? getCookie('Token') : null;
     const tokenExists = token !== (null && undefined)? true : false;
     switch (tokenExists) {
         case false:
@@ -86,9 +86,7 @@ export default function Login() {
                 
             )
         case true:
-            router.push('/lk', 
-            {   token: token
-            })
+            router.replace('/lk/')
             break;
     }
 

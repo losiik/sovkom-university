@@ -24,25 +24,32 @@ $(document).ready(function () {
                 "password": user_password,
                 "email": user_login,            
             };
-      
+            console.log(dataTosend);
             $.ajax({
                 method: 'post',
+                type: 'post',
                 url: urls.loginUrl,
                 data: JSON.stringify(dataTosend),
                 success: function(data){
-                   if(data.success ==  true) {
-                    document.cookie = `token=${data.access_token}; max-age=5000; path=/;`;
+                    console.log(2222);
+                   if(data.access_token !== (undefined && null && "")) {
+                    document.cookie = `Token=${data.access_token}; max-age=2000000; path=/;`;
+                    console.log('redirect  working');
                     location.replace('/lk/')
-                   } else if(data.success ==  false) {
+                   } else if(data.access_token == (undefined || null || "")) {
                     alert('Неправильные логин и/или пароль!');
                     location.reload();
                    }
                 },
                 error: function(){
+                    console.log(23432);
                     alert('Неправильные логин и/или пароль! Проверьте правильность ввденных данных!');
                     location.reload();
                     
-                }
+                },
+                complete: function () {
+                    console.log(1010101);
+                  }
             })
         }
         if (e.target.attributes.class.value.includes('signup_form')) {
@@ -65,10 +72,10 @@ $(document).ready(function () {
                 url: urls.signupUrl,
                 data: JSON.stringify(dataTosend),
                 success: function(data){
-                   if(data.success ==  true) {
+                   if(data.access_token !== (undefined && null && "" )) {
                     document.cookie = `Token=${data.access_token}; max-age=5000; path=/;`;
                     location.replace('/lk/')
-                   } else if(data.success ==  false) {
+                   } else if(data.access_token == (undefined || null || "")) {
                     alert('Такой пользоватлеь уже существует! Войдите с помощью формы выше! www');
                     location.reload();
                    }
