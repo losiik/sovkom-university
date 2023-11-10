@@ -1,4 +1,4 @@
-from models import User, Role, db
+from models import User, Role, db, Course
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -62,6 +62,18 @@ def login():
         access_token = create_access_token(identity=email)
         return {'access_token': access_token, 'role_id': user.role_id}
     return {'message': 'Invalid credentials'}, 401
+
+
+@app.route('/get_all_courses', methods=['GET'])
+def get_all_courses():
+    courses = Course.query.all()
+
+    response = []
+
+    for course in courses:
+        response.append({"id": course.id, "name": course.name, "description": course.description})
+
+    return {"courses": response}, 200
 
 
 if __name__ == '__main__':

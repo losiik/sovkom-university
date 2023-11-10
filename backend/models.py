@@ -27,6 +27,12 @@ class Role(db.Model):
     role = db.Column(db.String, unique=True, nullable=False)
 
 
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+    description = db.Column(db.String, nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
