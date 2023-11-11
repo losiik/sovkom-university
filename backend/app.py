@@ -84,7 +84,6 @@ def order_course():
 
     data = request.get_json()
 
-    order_id = data['id']
     user_id = user.id
     name = data['name']
     director = data['director']
@@ -93,10 +92,10 @@ def order_course():
     work_experience = data['work_experience']
     personal_achievements = data['personal_achievements']
     motivation_letter = data['motivation_letter']
+    state = data["state"]
 
     try:
         course = OrderCourse(
-            id=order_id,
             user_id=user_id,
             name=name,
             director=director,
@@ -105,14 +104,16 @@ def order_course():
             work_experience=work_experience,
             personal_achievements=personal_achievements,
             motivation_letter=motivation_letter,
+            state=state
         )
         db.session.add(course)
         db.session.commit()
 
         return {'success': True}, 200
-    except IntegrityError:
+    except IntegrityError as ex:
         db.session.rollback()
-        return {'success': False}, 400
+        print(ex)
+        return {'success': False, "EX": str(ex)}, 400
 
 
 if __name__ == '__main__':

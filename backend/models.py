@@ -34,7 +34,7 @@ class Course(db.Model):
 
 
 class OrderCourse(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String, nullable=False)
     director = db.Column(db.String, nullable=False)
