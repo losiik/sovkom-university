@@ -33,6 +33,18 @@ class Course(db.Model):
     description = db.Column(db.String, nullable=False)
 
 
+class OrderCourse(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    director = db.Column(db.String, nullable=False)
+    name_of_the_division = db.Column(db.String, nullable=False)
+    position = db.Column(db.String, nullable=False)
+    work_experience = db.Column(db.String, nullable=False)
+    personal_achievements = db.Column(db.String, nullable=False)
+    motivation_letter = db.Column(db.String, nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
