@@ -49,6 +49,11 @@ const Lk = () => {
     case 4:
         return <LkForCurator />;
     default:
+        console.log(getCookie('Token'))
+        const token = getCookie('Token') !== undefined ? getCookie('Token') : null;
+        
+        const tokenExists = token !== (null && undefined)? true : false;
+        console.log(token, tokenExists)
       return <>Ваша роль не определена</>;
     }   
 };

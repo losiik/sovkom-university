@@ -1,7 +1,9 @@
 'use client'
 
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react';
+
 import Header  from '../components/Header'
 import Scripts from '../components/Scripts'
 
@@ -9,6 +11,89 @@ export default function Login() {
     const router = useRouter()
     const token = getCookie('Token') !== undefined ? getCookie('Token') : null;
     const tokenExists = token !== (null && undefined)? true : false;
+
+    const [loginValue, setLoginValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
+
+    const [surnameValue, setSurnameValue] = useState('');
+    const [nameValue, setNameValue] = useState('');
+    const [passwordRegValue, setPasswordRegValue] = useState('');
+    const [emailValue, setEmailVlaue] = useState('');
+    const [phoneValue, setPhoneVlaue] = useState('');
+
+    let dataToSend = {}
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(e)
+        const urls = {
+            loginUrl: 'http://localhost:9000/login',
+            signupUrl: 'http://localhost:9000/registration',
+        }
+        switch (e.target.attributes.class.value) {
+            case 'login_form':
+                dataToSend = {
+                    "password": passwordValue,
+                    "email": loginValue,            
+                };
+                console.log(dataToSend)
+                try {
+                    let res = await fetch(urls.loginUrl, {
+                      method: "POST",
+                      body: JSON.stringify(dataToSend),
+                      headers: {
+                        'Content-Type': 'application/json',
+                      }
+                    });
+                    let data = await res.json();
+                    console.log(data)
+                    if(data.access_token !== (undefined && null && "")) {
+                        setCookie('Token', data.access_token, {'max-age': 2000000, 'path': '/'});
+                        document.cookie = `Token=${data.access_token}; max-age=2000000; path=/;`;
+                        router.replace('/lk/')
+                    } else if(data.access_token == (undefined || null || "")) {
+                        alert('Неправильные логин и/или пароль!');
+                        setLoginValue('')
+                        setPasswordValue('')
+                    }
+                  } catch (err) {
+                    console.log(err);
+                  }
+                break;
+            case 'signup_form mt-5':
+                dataToSend = {
+                    "first_name": nameValue,
+                    "last_name": surnameValue,
+                    "password": passwordRegValue,
+                    "email": emailValue,
+                    "phone_number": phoneValue
+                }
+                console.log(dataToSend)
+                try {
+                    let res = await fetch(urls.signupUrl, {
+                      method: "POST",
+                      body: JSON.stringify(dataToSend),
+                      headers: {
+                        'Content-Type': 'application/json',
+                      }
+                    });
+                    let data = await res.json();
+                    console.log(data)
+                    if(data.access_token !== (undefined && null && "")) {
+                        setCookie('Token', data.access_token, {'max-age': 2000000, 'path': '/'});
+                       
+                        router.replace('/lk/')
+                    } else if(data.access_token == (undefined || null || "")) {
+                        alert('Неправильные логин и/или пароль!');
+                        setLoginValue('')
+                        setPasswordValue('')
+                    }
+                  } catch (err) {
+                    console.log(err);
+                  }
+                break;
+        }
+    }
+
     switch (tokenExists) {
         case false:
             return (
@@ -21,29 +106,39 @@ export default function Login() {
                                 </div>
                               <div className="d-flex flex-column align-items-center ">
                                  <div className="w-100 w-lg-50 ">
-                                    <form className="login_form" action="../src/submitFormHandler" method="post">
+                                    <form onSubmit={handleSubmit} className="login_form" >
                                         <input 
+                                        key={1}
                                         className="b_input"
                                         placeholder="Логин"
                                         name="user_login"
                                         id="user_login"
+                                        type="text"
+                                        value={loginValue}
+                                        onChange={(e) => setLoginValue(e.target.value)}
                                         ></input>
                                           <input 
+                                          key={2}
                                         className="b_input"
                                         placeholder="Пароль"
                                         name="user_password"
                                         id="user_password"
+                                        value={passwordValue}
+                                        type="password"
+                                        onChange={(e) => setPasswordValue(e.target.value)}
                                         ></input>
                                         <button className="b_btn_main w-100"
                                         type="submit"
                                         > Войти</button>
                                     </form>
-                                    <form className="signup_form mt-5" >
+                                    <form className="signup_form mt-5" onSubmit={handleSubmit} >
                                         <input 
                                         className="b_input"
                                         placeholder="Имя"
                                         name="user_name"
                                         id="user_name"
+                                        value={nameValue}
+                                        onChange={(e) => setNameValue(e.target.value)}
                                         required
                                         ></input>
                                          <input 
@@ -51,6 +146,8 @@ export default function Login() {
                                         placeholder="Фамилия"
                                         name="user_surname"
                                         id="user_surname"
+                                        value={surnameValue}
+                                        onChange={(e) => setSurnameValue(e.target.value)}
                                         required
                                         ></input>
                                           <input 
@@ -58,6 +155,8 @@ export default function Login() {
                                         placeholder="Адрес электронной почты"
                                         name="user_email"
                                         id="user_email"
+                                        value={emailValue}
+                                        onChange={(e) => setEmailVlaue(e.target.value)}
                                         required
                                         ></input>
                                           <input 
@@ -65,12 +164,16 @@ export default function Login() {
                                         placeholder="Телефон"
                                         name="user_phone"
                                         id="user_phone"
+                                        value={phoneValue}
+                                        onChange={(e) => setPhoneVlaue(e.target.value)}
                                         ></input>
                                           <input 
                                         className="b_input"
                                         placeholder="Пароль"
-                                        name="user_password"
-                                        id="user_password"
+                                        name="user_regpassword"
+                                        id="user_regpassword"
+                                        value={passwordRegValue}
+                                        onChange={(e) => setPasswordRegValue(e.target.value)}
                                         required
                                         ></input>
                                         <button className="b_btn_main w-100"
