@@ -1,10 +1,10 @@
 from models import User, Role, db, Course, OrderCourse
-from flask import Flask, request
+from flask import Flask, request, Response, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS, cross_origin
-
+import json
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -43,8 +43,16 @@ def registration():
         db.session.commit()
 
         access_token = create_access_token(identity=email)
+        resp = Response(
+            json.dumps({
+                'success': True,
+                'access_token': access_token,
+                'first_name': first_name
+            }),
+            200)
+        resp.headers['Set-cookie'] = f'Token={access_token};max-age=2592000;path=/'
+        return resp
 
-        return {'success': True, 'access_token': access_token, 'first_name': first_name}, 200
     except IntegrityError:
         db.session.rollback()
         return {'success': False}, 400
@@ -60,7 +68,15 @@ def login():
     user = User.query.filter_by(email=email, password=password).first()
     if user:
         access_token = create_access_token(identity=email)
-        return {'access_token': access_token, 'role_id': user.role_id, 'first_name': user.first_name}
+        resp = Response(
+            json.dumps({
+                'access_token': access_token,
+                'role_id': user.role_id,
+                'first_name': user.first_name
+            }),
+            200)
+        resp.headers['Set-cookie'] = f'Token={access_token};max-age=2592000;path=/'
+        return resp
     return {'message': 'Invalid credentials'}, 401
 
 
@@ -110,10 +126,9 @@ def order_course():
         db.session.commit()
 
         return {'success': True}, 200
-    except IntegrityError as ex:
+    except IntegrityError:
         db.session.rollback()
-        print(ex)
-        return {'success': False, "EX": str(ex)}, 400
+        return {'success': False}, 400
 
 
 if __name__ == '__main__':
