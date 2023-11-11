@@ -1,4 +1,4 @@
-from models import User, Role, db, Course, OrderCourse
+from models import User, Role, db, Course, OrderCourse, StudentCourses
 from flask import Flask, request, Response, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -129,6 +129,41 @@ def order_course():
     except IntegrityError:
         db.session.rollback()
         return {'success': False}, 400
+
+
+@app.route('/student_courses', methods=['GET'])
+@jwt_required()
+def student_courses():
+    response = []
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    courses = Course.query.join(StudentCourses).filter(StudentCourses.user_id == user.id).all()
+
+    for course in courses:
+        response.append(
+            {
+                "id": course.id,
+                "name": course.name
+            }
+        )
+
+    return {'student_courses': response}, 200
+
+
+@app.route('/header', methods=['GET'])
+@jwt_required()
+def get_header_info():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    return (
+        {
+            "user_name": user.first_name,
+            "role_id": user.role_id
+        }
+    ), 200
 
 
 if __name__ == '__main__':
