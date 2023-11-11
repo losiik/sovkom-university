@@ -43,6 +43,7 @@ class OrderCourse(db.Model):
     work_experience = db.Column(db.String, nullable=False)
     personal_achievements = db.Column(db.String, nullable=False)
     motivation_letter = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
 
 
 if __name__ == '__main__':
