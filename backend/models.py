@@ -31,6 +31,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String, nullable=True)
 
 
 class OrderCourse(db.Model):
@@ -44,6 +45,12 @@ class OrderCourse(db.Model):
     personal_achievements = db.Column(db.String, nullable=False)
     motivation_letter = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
+
+
+class StudentCourses(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
 
 
 if __name__ == '__main__':
