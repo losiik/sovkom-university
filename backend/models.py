@@ -105,6 +105,24 @@ class StudentsHomeWork(db.Model):
     home_work_id = db.Column(db.Integer, db.ForeignKey('home_work.id'), nullable=False)
 
 
+class TutorsCourses(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class Group(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class TutorsGroup(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

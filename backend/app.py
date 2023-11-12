@@ -1,5 +1,6 @@
 from models import (User, Role, db, Course, OrderCourse, StudentCourses, Test, UserTests,
-                    EducationalMaterials, StudentsEducationalMaterials, HomeWork, StudentsHomeWork)
+                    EducationalMaterials, StudentsEducationalMaterials, HomeWork, StudentsHomeWork,
+                    TutorsCourses, Group, TutorsGroup)
 from flask import Flask, request, Response
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
@@ -212,6 +213,41 @@ def get_course_info():
                 "id": home_work.id,
                 "home_works_name": home_work.name,
                 "slug": home_work.slug
+            }
+        )
+
+    return response, 200
+
+
+@app.route('/whore_tutor_info', methods=['GET'])
+@jwt_required()
+def tutor_info():
+    response = {}
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    tutor_courses = Course.query.join(TutorsCourses).filter(TutorsCourses.tutor_id == user.id).all()
+    response["tutor_courses"] = []
+
+    for tutor_course in tutor_courses:
+        response["tutor_courses"].append(
+            {
+                "id": tutor_course.id,
+                "name": tutor_course.name,
+                "description": tutor_course.description,
+                "slug": tutor_course.slug
+            }
+        )
+
+    tutor_groups = Group.query.join(TutorsGroup).filter(TutorsGroup.tutor_id == user.id).all()
+    response["tutor_groups"] = []
+
+    for tutor_group in tutor_groups:
+        response["tutor_groups"].append(
+            {
+                "id": tutor_group.id,
+                "name": tutor_group.name
             }
         )
 
