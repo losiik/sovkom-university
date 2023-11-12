@@ -8,8 +8,10 @@ import Header from '../../components/Header'
 
 
 
-export default function page({ params }) {
-
+export default function Page({ params }) {
+    useEffect(() => {
+        
+    }, [])
     return (
         <>
             <Header />
