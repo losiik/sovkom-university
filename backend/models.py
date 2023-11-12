@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sovkom.db' #"postgresql+psycopg2://postgres:admin123@localhost:5435/sovkom"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://postgres:admin123@142.93.230.144:5433/sovkom"
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 
 db = SQLAlchemy(app)
@@ -57,10 +57,10 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    role1 = Role(id='642b6836-51f6-4ace-8e1e-8ff7b47e5719', role='абитуриент')
-    role2 = Role(id='78c2d488-d982-4e5b-a4ef-d105f67e6935', role='студент')
-    role3 = Role(id='2b618d72-cd4e-4f90-81d2-293599e50e5e', role='куратор')
-    role4 = Role(id='abfa64e6-78c7-40de-ab54-bb442554b117', role='преподаватель')
-    db.session.add_all(
-        [role1, role2, role3, role4])
-    db.session.commit()
+        role1 = Role(id='642b6836-51f6-4ace-8e1e-8ff7b47e5719', role='абитуриент')
+        role2 = Role(id='78c2d488-d982-4e5b-a4ef-d105f67e6935', role='студент')
+        role3 = Role(id='2b618d72-cd4e-4f90-81d2-293599e50e5e', role='куратор')
+        role4 = Role(id='abfa64e6-78c7-40de-ab54-bb442554b117', role='преподаватель')
+        db.session.add_all(
+            [role1, role2, role3, role4])
+        db.session.commit()
