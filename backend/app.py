@@ -1,9 +1,9 @@
-from models import User, Role, db, Course, OrderCourse, StudentCourses
-from flask import Flask, request, Response, jsonify
-from flask_restful import Resource, Api, reqparse
+from models import (User, Role, db, Course, OrderCourse, StudentCourses, Test, UserTests,
+                    EducationalMaterials, StudentsEducationalMaterials, HomeWork, StudentsHomeWork)
+from flask import Flask, request, Response
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import json
 
 app = Flask(__name__)
@@ -145,7 +145,8 @@ def student_courses():
         response.append(
             {
                 "id": course.id,
-                "name": course.name
+                "name": course.name,
+                "slug": course.slug
             }
         )
 
@@ -164,6 +165,57 @@ def get_header_info():
             "role_id": user.role_id
         }
     ), 200
+
+
+@app.route('/course_info', methods=['POST'])
+@jwt_required()
+def get_course_info():
+    response = {}
+    data = request.get_json()
+    course_id = data["course_id"]
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    tests = Test.query.join(UserTests).filter(UserTests.user_id == user.id, Test.course_id == course_id).all()
+
+    response["tests"] = []
+    for test in tests:
+        response["tests"].append(
+            {
+                "id": test.id,
+                "test_name": test.name,
+                "slug": test.slug
+            }
+        )
+
+    ed_materials = (EducationalMaterials.query.join(StudentsEducationalMaterials)
+                             .filter(StudentsEducationalMaterials.user_id == user.id,
+                                     EducationalMaterials.course_id == course_id).all())
+    response["educational_materials"] = []
+
+    for ed_material in ed_materials:
+        response["educational_materials"].append(
+            {
+                "id": ed_material.id,
+                "educational_materials_name": ed_material.name,
+                "slug": ed_material.slug
+            }
+        )
+
+    home_works = HomeWork.query.join(StudentsHomeWork).filter(StudentsHomeWork.user_id == user.id,
+                                     HomeWork.course_id == course_id).all()
+    response["home_works"] = []
+
+    for home_work in home_works:
+        response["home_works"].append(
+            {
+                "id": home_work.id,
+                "home_works_name": home_work.name,
+                "slug": home_work.slug
+            }
+        )
+
+    return response, 200
 
 
 if __name__ == '__main__':

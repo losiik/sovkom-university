@@ -34,6 +34,32 @@ class Course(db.Model):
     slug = db.Column(db.String, nullable=True)
 
 
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String, nullable=False)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
+
+
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String, nullable=False)
+    is_truth = db.Column(db.Boolean, nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+
+
+class Test(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class UserTests(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
+
+
 class OrderCourse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
@@ -51,6 +77,32 @@ class StudentCourses(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class EducationalMaterials(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class StudentsEducationalMaterials(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    educational_materials_id = db.Column(db.Integer, db.ForeignKey('educational_materials.id'), nullable=False)
+
+
+class HomeWork(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class StudentsHomeWork(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    home_work_id = db.Column(db.Integer, db.ForeignKey('home_work.id'), nullable=False)
 
 
 if __name__ == '__main__':
