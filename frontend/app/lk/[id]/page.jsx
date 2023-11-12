@@ -8,13 +8,14 @@ import Header from '../../components/Header'
 
 
 
-export default function Page({ params }) {
+export default function Page({ params: {id: slug} }) {
     useEffect(() => {
         
     }, [])
     return (
         <>
             <Header />
+            slug is {slug}
         </>
     )
 }

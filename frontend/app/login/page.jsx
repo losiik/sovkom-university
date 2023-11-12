@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 
 import Header  from '../components/Header'
-import Scripts from '../components/Scripts'
 
 export default function Login() {
     const router = useRouter()
@@ -185,7 +184,7 @@ export default function Login() {
                               </div>
                             </div>
                         </section>
-                    <Scripts />
+      
                 </>
                 
             )

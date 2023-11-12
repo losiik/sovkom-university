@@ -1,17 +1,36 @@
+'use client'
+
 import Image from 'next/image'
 import Header  from './components/Header'
-import Scripts from './components/Scripts'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import Link from 'next/link'
 
-async function getData() {
-  const res = await fetch('http://localhost:9000/get_all_courses')
-  return res.json()
-}
+// async function getData() {
+//   const res = await fetch('http://localhost:9000/get_all_courses')
+//   return res.json()
+// }
 
-export default async function Home() {
- const mockData = await getData()
- 
+
+
+export default function Home() {
+
+  const [mockData, setMockData] = useState({
+    courses: []
+  })
+
+  const router = useRouter()
+  useEffect(() => {
+    fetch('http://localhost:9000/get_all_courses', {
+        method: "GET"
+    })
+     .then(response => response.json())
+     .then((data) => {
+        data.msg == undefined ? setMockData(data) : false;
+    })            
+  }, [router])
+
   return (
     <>
     <Header/>
@@ -41,7 +60,7 @@ export default async function Home() {
                         </div>
                       </div>
                   </div>
-                )) : <></>}
+                )) : ''}
                 </div>
             </section>
             <div className="b_btn_wrapper">
@@ -49,7 +68,6 @@ export default async function Home() {
             </div>
         </div>
       </main>
-     <Scripts />
     </>
   )
   

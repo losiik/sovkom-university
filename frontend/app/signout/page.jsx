@@ -2,15 +2,23 @@
 
 import { useRouter } from 'next/navigation'
 import { getCookie,deleteCookie } from 'cookies-next';
+import { useEffect, useState } from 'react'
 
-export default function SingOUt(){
+import Header  from '../components/Header'
+
+
+export default function Page(){
     const router = useRouter();
-    if(getCookie('XToken') !== (undefined && null && "")) {
-        deleteCookie('userRoleId')
-        deleteCookie('XToken');
+    useEffect(() => {
+        if(getCookie('XToken')) {
+            deleteCookie('userRoleId')
+            deleteCookie('XToken');
+        }
         router.push('/')
-    } else {
-        router.push('/')
-    }
-
+    },[router])
+    return (
+        <>
+            <Header/>
+        </>
+    )
 }
