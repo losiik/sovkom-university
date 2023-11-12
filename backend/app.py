@@ -9,7 +9,7 @@ import json
 app = Flask(__name__)
 cors = CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sovkom.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://postgres:admin123@142.93.230.144:5433/sovkom"
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CORS_HEADERS'] = 'Content-Type'
