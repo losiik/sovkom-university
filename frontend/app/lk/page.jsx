@@ -1,60 +1,26 @@
 'use client'
 
-import LkForTeacher from '../components/LkForTeacher';
-import LkForStudent from '../components/LkForStudent';
+import LkForTeacher from '../components/LkforTeacher';
+import LkForStudent from '../components/LkforStudent';
 import LkForCurator from '../components/LkForCurator';
-import { getCookie,deleteCookie } from 'cookies-next';
-import { useRouter } from 'next/navigation';
+import LkForAbiturient from '../components/LkForAbiturient'
+import { getCookie } from 'cookies-next';
+import Header from '../components/Header';
 
-import { useEffect, useState } from 'react';
-
-const Lk = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:9000/lk', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getCookie('Token')}`
-          },
-        });
-        if (!response.ok) {
-          
-             throw new Error('Network response was not ok');
-          
-        }
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        deleteCookie('Token');
-        console.error('There has been a problem with your fetch operation:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const role = data?.role_id;
-
+const Lk = () => {  
+  const role = getCookie('userRoleId')
+  console.log(role)
   switch (role) {
-    case "642b6836-51f6-4ace-8e1e-8ff7b47e5719":
+    case "abfa64e6-78c7-40de-ab54-bb442554b117":
       return <LkForTeacher />;
-    case 2:
+    case "642b6836-51f6-4ace-8e1e-8ff7b47e5719":
+      return <LkForAbiturient />;
+    case "78c2d488-d982-4e5b-a4ef-d105f67e6935":
       return <LkForStudent />;
-    case 3:
-      return <LkForCurator />;
-    case 4:
+    case "2b618d72-cd4e-4f90-81d2-293599e50e5e":
         return <LkForCurator />;
-    default:
-        console.log(getCookie('Token'))
-        const token = getCookie('Token') !== undefined ? getCookie('Token') : null;
-        
-        const tokenExists = token !== (null && undefined)? true : false;
-        console.log(token, tokenExists)
-      return <>Ваша роль не определена</>;
+    default:        
+      return <><Header/>Ваша роль не определена</>;
     }   
 };
 

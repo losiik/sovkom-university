@@ -116,3 +116,31 @@ input::placeholder, textarea::placeholder {
 form {
   margin: 2rem 0;
 }
+.b_courses {
+  display: flex;
+  flex-direction: column;
+
+}
+.b_studCourse_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem ;
+  border: 3px solid #108EFE;
+  margin-top: 1.5rem;
+}
+.b_course_name {
+  width: 75%;
+}
+.b_cousre_progress {
+  width: 15%;
+}
+.b_course_name a {
+  font-size: 35px;
+  text-decoration: none;
+}
+.b_cousre_progress {
+  font-size: 35px;
+  display: flex;
+  justify-content: flex-end;
+}

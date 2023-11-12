@@ -1,12 +1,14 @@
-import GetDataFromApi from '../src/getDataApi'
+'use client'
+
 import Header from './Header'
-import Scripts from './Scripts'
 
 export default function LkForTeacher(){
     return (
         <>
             <Header />
-            <Scripts />
+            <div className="container-xl">
+                dkdkdk
+            </div>
         </>
     )
 }

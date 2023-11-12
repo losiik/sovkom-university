@@ -1,12 +1,26 @@
+"use client"
+
 import Image from "next/image"
 import Link  from "next/link"
-import GetDataFromApi from '../src/getDataApi'
+import { getCookie } from 'cookies-next'
+import { useEffect, useState } from 'react'
 
-//const data = GetDataFromApi('http://localhost:8000/api/about/');
-//   console.log(data)
 
-export default function Header({text, name, surname}) {
 
+export default function Header() {
+const [userName, setName] = useState(null);
+
+    useEffect(() => {
+           fetch('http://localhost:9000/header', {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${getCookie('XToken')}`
+                  }
+            })
+            .then(response => response.json())
+            .then(data => setName(data.user_name))      
+
+    }, [])
   return (
         <header>
             <div className="container-lg">
@@ -18,15 +32,14 @@ export default function Header({text, name, surname}) {
                         height="100"
                         />
                     </div>
-                    <div className="b_text_wrapper d-none d-md-block">
-                    {text !==undefined ? text : 'Корпоративный университет группы компаний Совкомбанк'}
+                    <div className="b_text_wrapper d-none d-md-block">Корпоративный университет группы компаний Совкомбанк
                     </div>
                      <div className="b_rigthSide_wrapper">
                      <div className="b_right_name">
-                        {name !==undefined ? name : <Link href="/login/">Вход </Link>}
+                     {userName !==undefined ? userName : <Link href="/login/">Вход </Link>}
                     </div>
                     <div className="b_right_surname">
-                        {surname !==undefined ? surname : <Link href="/login/">Регистрация </Link>}
+                        {userName !==undefined ? <Link href="/signout/">Выйти</Link> : <Link href="/login/">Регистрация </Link>}
                     </div>
                        
                     </div>

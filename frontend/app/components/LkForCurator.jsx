@@ -1,12 +1,14 @@
-import GetDataFromApi from '../src/getDataApi'
-import Header from './Header'
-import Scripts from './Scripts'
+'use client'
 
-export default function LkForCurator(){
+import Header from './Header'
+
+export default  function LkForCurator(){
     return (
         <>
             <Header />
-            <Scripts />
+            <div className="container-xl">
+                dkdkdkvkwejcnekcjnekrjncecn
+            </div>
         </>
     )
 }

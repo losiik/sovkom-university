@@ -1,6 +1,6 @@
 'use client'
 
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 
@@ -9,7 +9,7 @@ import Scripts from '../components/Scripts'
 
 export default function Login() {
     const router = useRouter()
-    const token = getCookie('Token') !== undefined ? getCookie('Token') : null;
+    const token = getCookie('XToken') !== undefined ? getCookie('XToken') : null;
     const tokenExists = token !== (null && undefined)? true : false;
 
     const [loginValue, setLoginValue] = useState('');
@@ -22,9 +22,9 @@ export default function Login() {
     const [phoneValue, setPhoneVlaue] = useState('');
 
     let dataToSend = {}
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e)
         const urls = {
             loginUrl: 'http://localhost:9000/login',
             signupUrl: 'http://localhost:9000/registration',
@@ -35,7 +35,6 @@ export default function Login() {
                     "password": passwordValue,
                     "email": loginValue,            
                 };
-                console.log(dataToSend)
                 try {
                     let res = await fetch(urls.loginUrl, {
                       method: "POST",
@@ -45,18 +44,21 @@ export default function Login() {
                       }
                     });
                     let data = await res.json();
-                    console.log(data)
                     if(data.access_token !== (undefined && null && "")) {
-                        setCookie('Token', data.access_token, {'max-age': 2000000, 'path': '/'});
-                        document.cookie = `Token=${data.access_token}; max-age=2000000; path=/;`;
-                        router.replace('/lk/')
+                       
+                       setCookie('XToken', `${data.access_token}`, {'max-age': 2592000, 'path': '/'});
+                       setCookie('userRoleId', `${data.role_id}`, {'max-age': 2592000, 'path': '/'});
+
+                       const tokken = getCookie('XToken')
+                       console.log(tokken)
+                        setTimeout(() => { router.push('/lk/')}, 1000)
                     } else if(data.access_token == (undefined || null || "")) {
                         alert('Неправильные логин и/или пароль!');
                         setLoginValue('')
                         setPasswordValue('')
                     }
                   } catch (err) {
-                    console.log(err);
+                    alert(err);
                   }
                 break;
             case 'signup_form mt-5':
@@ -77,10 +79,9 @@ export default function Login() {
                       }
                     });
                     let data = await res.json();
-                    console.log(data)
                     if(data.access_token !== (undefined && null && "")) {
-                        setCookie('Token', data.access_token, {'max-age': 2000000, 'path': '/'});
-                       
+                        setCookie('XToken', `${data.access_token}`, {'max-age': 2592000, 'path': '/'});
+                        setCookie('userRoleId', `${data.role_id}`, {'max-age': 2592000, 'path': '/'});                       
                         router.replace('/lk/')
                     } else if(data.access_token == (undefined || null || "")) {
                         alert('Неправильные логин и/или пароль!');
