@@ -98,6 +98,7 @@ def order_course():
 
     user_id = user.id
     name = data['name']
+    course_name = data['course_name']
     director = data['director']
     name_of_the_division = data['name_of_the_division']
     position = data['position']
@@ -110,6 +111,7 @@ def order_course():
         course = OrderCourse(
             user_id=user_id,
             name=name,
+            course_name=course_name,
             director=director,
             name_of_the_division=name_of_the_division,
             position=position,
@@ -141,7 +143,7 @@ def get_my_order_courses():
         response.append(
             {
                 "id": order.id,
-                "name": order.name,
+                "name": order.course_name,
                 "state": order.state
             }
         )

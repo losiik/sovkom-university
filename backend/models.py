@@ -63,6 +63,7 @@ class UserTests(db.Model):
 class OrderCourse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
+    course_name = db.Column(db.String, db.ForeignKey('course.name'), nullable=False)
     name = db.Column(db.String, nullable=False)
     director = db.Column(db.String, nullable=False)
     name_of_the_division = db.Column(db.String, nullable=False)
