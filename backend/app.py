@@ -44,15 +44,13 @@ def registration():
         db.session.commit()
 
         access_token = create_access_token(identity=email)
-        resp = Response(
-            json.dumps({
+
+        return {
                 'success': True,
                 'access_token': access_token,
-                'first_name': first_name
-            }),
-            200)
-        resp.headers['Set-cookie'] = f'Token={access_token};max-age=2592000;path=/'
-        return resp
+                'first_name': first_name,
+                'role_id': role.id
+            }, 200
 
     except IntegrityError:
         db.session.rollback()
@@ -69,15 +67,12 @@ def login():
     user = User.query.filter_by(email=email, password=password).first()
     if user:
         access_token = create_access_token(identity=email)
-        resp = Response(
-            json.dumps({
+
+        return {
                 'access_token': access_token,
                 'role_id': user.role_id,
                 'first_name': user.first_name
-            }),
-            200)
-        resp.headers['Set-cookie'] = f'Token={access_token};max-age=2592000;path=/'
-        return resp
+            }, 200
     return {'message': 'Invalid credentials'}, 401
 
 
