@@ -1,11 +1,11 @@
 from models import (User, Role, db, Course, OrderCourse, StudentCourses, Test, UserTests,
                     EducationalMaterials, StudentsEducationalMaterials, HomeWork, StudentsHomeWork,
                     TutorsCourses, Group, TutorsGroup)
-from flask import Flask, request, Response
+from flask import Flask, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-import json
+
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -125,6 +125,27 @@ def order_course():
     except IntegrityError:
         db.session.rollback()
         return {'success': False}, 400
+
+
+@app.route('/my_orders', methods=['GET'])
+@jwt_required()
+def get_my_order_courses():
+    response = []
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    orders = OrderCourse.query.filter_by(OrderCourse.user_id == user.id).all()
+
+    for order in orders:
+        response.append(
+            {
+                "name": order.name,
+                "state": order.state
+            }
+        )
+
+    return {"orders": response}, 200
 
 
 @app.route('/student_courses', methods=['GET'])
