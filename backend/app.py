@@ -138,7 +138,7 @@ def get_my_order_courses():
     current_user = get_jwt_identity()
     user = User.query.filter_by(email=current_user).first()
 
-    orders = OrderCourse.query.filter_by(OrderCourse.user_id == user.id).all()
+    orders = OrderCourse.query.filter_by(user_id=user.id).all()
 
     for order in orders:
         response.append(
