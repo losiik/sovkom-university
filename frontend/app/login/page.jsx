@@ -50,8 +50,8 @@ export default function Login() {
 
                        const tokken = getCookie('XToken')
                        console.log(tokken)
-                        setTimeout(() => { router.push('/lk/')}, 1000)
-                    } else if(data.access_token == (undefined || null || "")) {
+                       router.push('/lk/')
+                    } else if(!data) {
                         alert('Неправильные логин и/или пароль!');
                         setLoginValue('')
                         setPasswordValue('')

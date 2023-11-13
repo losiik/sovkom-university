@@ -23,14 +23,15 @@ export default function Home() {
   const router = useRouter()
   useEffect(() => {
     fetch('http://localhost:9000/get_all_courses', {
-        method: "GET"
+        method: "GET",
+        
     })
      .then(response => response.json())
      .then((data) => {
-        data.msg == undefined ? setMockData(data) : false;
+        data.msg === undefined ? setMockData(data) : false;
+        
     })            
   }, [router])
-
   return (
     <>
     <Header/>

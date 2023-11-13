@@ -18,7 +18,6 @@ export default function LkForStudent(){
         })
          .then(response => response.json())
          .then((data) => {
-            console.log(JSON.stringify(data))
             data.msg !== undefined ? data.msg == 'Token has expired' ?  router.push('/signout') : setCourse(data) : setCourse(data);
         })            
     }, [router])
@@ -36,7 +35,7 @@ export default function LkForStudent(){
                 {courses.student_courses !== undefined ? courses.student_courses.map((item) => (
                     
                     <div key={item.id} id={item.id} className="b_studCourse_item">
-                        <div className="b_course_name"><Link href={`/lk/${item.slug}`} >{item.name}</Link></div>
+                        <div className="b_course_name"><Link href={`/lk/${item.id}`} >{item.name}</Link></div>
                         <div className="b_cousre_progress">55%</div>
                    </div>
                 )): ''}
