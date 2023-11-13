@@ -95,6 +95,7 @@ def order_course():
     user = User.query.filter_by(email=current_user).first()
 
     data = request.get_json()
+    print(type(data))
 
     user_id = user.id
     name = data['name']
