@@ -140,6 +140,7 @@ def get_my_order_courses():
     for order in orders:
         response.append(
             {
+                "id": order.id,
                 "name": order.name,
                 "state": order.state
             }
