@@ -25,8 +25,8 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const urls = {
-            loginUrl: 'http://localhost:9000/login',
-            signupUrl: 'http://localhost:9000/registration',
+            loginUrl: 'http://142.93.230.144:9000/login',
+            signupUrl: 'http://142.93.230.144:9000/registration',
         }
         switch (e.target.attributes.class.value) {
             case 'login_form':

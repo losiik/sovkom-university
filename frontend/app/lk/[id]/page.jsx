@@ -20,7 +20,7 @@ export default function Page({ params: {id: id} }) {
         const dataToSend = {
             course_id: id
         }
-        fetch('http://localhost:9000/course_info', {
+        fetch('http://142.93.230.144:9000/course_info', {
         method: "POST",
         body:  JSON.stringify(dataToSend),
         headers: {

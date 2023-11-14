@@ -11,7 +11,7 @@ export default function Header() {
 const [userName, setName] = useState(null);
 
     useEffect(() => {
-           fetch('http://localhost:9000/header', {
+           fetch('http://142.93.230.144:9000/header', {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`
