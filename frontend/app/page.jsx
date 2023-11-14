@@ -7,13 +7,6 @@ import { useRouter } from 'next/navigation'
 
 import Link from 'next/link'
 
-// async function getData() {
-//   const res = await fetch('http://localhost:9000/get_all_courses')
-//   return res.json()
-// }
-
-
-
 export default function Home() {
 
   const [mockData, setMockData] = useState({
@@ -22,7 +15,7 @@ export default function Home() {
 
   const router = useRouter()
   useEffect(() => {
-    fetch('http://localhost:9000/get_all_courses', {
+    fetch('http://142.93.230.144/api/get_all_courses', {
         method: "GET",
         
     })
