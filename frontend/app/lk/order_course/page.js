@@ -38,7 +38,7 @@ export default function OrderCourse() {
         };
         console.log(dataToSend)
         try {
-            let res = await fetch("http://142.93.230.144:9000/order_course", {
+            let res = await fetch("http://142.93.230.144/api/order_course", {
               method: "POST",
               body: JSON.stringify(dataToSend),
               headers: {

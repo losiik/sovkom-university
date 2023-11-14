@@ -17,7 +17,7 @@ export default function LkForAbiturient(){
     })
       const router = useRouter()
       useEffect(() => {
-        fetch('http://142.93.230.144:9000/get_all_courses', {
+        fetch('http://142.93.230.144/api/get_all_courses', {
             method: "GET"
         })
          .then(response => response.json())
@@ -27,7 +27,7 @@ export default function LkForAbiturient(){
         })            
       }, []);
       useEffect(() => {
-        fetch('http://142.93.230.144:9000/my_orders', {
+        fetch('http://142.93.230.144/api/my_orders', {
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${getCookie('XToken')}`,
