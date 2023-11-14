@@ -1,3 +1,13 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+DB_POSTGRES_DBNAME = os.getenv("DB_POSTGRES_DBNAME")
+DB_POSTGRES_USERNAME = os.getenv("DB_POSTGRES_USERNAME")
+DB_POSTGRES_PASSWORD = os.getenv("DB_POSTGRES_PASSWORD")
+DB_POSTGRES_HOST = os.getenv("DB_POSTGRES_HOST")
+DB_POSTGRES_PORT = os.getenv("DB_POSTGRES_PORT")
+
 from models import (User, Role, db, Course, OrderCourse, StudentCourses, Test, UserTests,
                     EducationalMaterials, StudentsEducationalMaterials, HomeWork, StudentsHomeWork,
                     TutorsCourses, Group, TutorsGroup)
@@ -10,7 +20,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 cors = CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://postgres:admin123@142.93.230.144:5433/sovkom"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://{DB_POSTGRES_USERNAME}:{DB_POSTGRES_PASSWORD}@{DB_POSTGRES_HOST}:{DB_POSTGRES_PORT}/{DB_POSTGRES_DBNAME}"
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CORS_HEADERS'] = 'Content-Type'

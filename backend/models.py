@@ -1,11 +1,18 @@
-import uuid
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+DB_POSTGRES_DBNAME = os.getenv("DB_POSTGRES_DBNAME")
+DB_POSTGRES_USERNAME = os.getenv("DB_POSTGRES_USERNAME")
+DB_POSTGRES_PASSWORD = os.getenv("DB_POSTGRES_PASSWORD")
+DB_POSTGRES_HOST = os.getenv("DB_POSTGRES_HOST")
+DB_POSTGRES_PORT = os.getenv("DB_POSTGRES_PORT")
 
 from flask import Flask
-from sqlalchemy.dialects.postgresql import UUID
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://postgres:admin123@142.93.230.144:5433/sovkom"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://{DB_POSTGRES_USERNAME}:{DB_POSTGRES_PASSWORD}@{DB_POSTGRES_HOST}:{DB_POSTGRES_PORT}/{DB_POSTGRES_DBNAME}"
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 
 db = SQLAlchemy(app)
@@ -22,7 +29,6 @@ class User(db.Model):
 
 
 class Role(db.Model):
-    #id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     id = db.Column(db.String, primary_key=True)
     role = db.Column(db.String, unique=True, nullable=False)
 
