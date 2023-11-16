@@ -62,3 +62,4 @@
 ## Ссылка на репозиторий
 
 - [https://github.com/losiik/sovkom-university](https://github.com/losiik/sovkom-university)
+
