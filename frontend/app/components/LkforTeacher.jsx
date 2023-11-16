@@ -16,7 +16,7 @@ export default function LkForTeacher(){
    
       const router = useRouter()
       useEffect(() => {
-        fetch('http://142.93.230.144/:9000/whore_tutor_info', {
+        fetch('http://142.93.230.144/api/whore_tutor_info', {
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${getCookie('XToken')}`

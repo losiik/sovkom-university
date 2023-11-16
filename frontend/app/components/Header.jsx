@@ -4,8 +4,7 @@ import Image from "next/image"
 import Link  from "next/link"
 import { getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
-
-
+import Script from 'next/script'
 
 export default function Header() {
 const [userName, setName] = useState(null);
@@ -22,6 +21,7 @@ const [userName, setName] = useState(null);
 
     }, [])
   return (
+      
         <header>
             <div className="container-lg">
                 <div className="b_headerInner ">
