@@ -284,5 +284,50 @@ def tutor_info():
     return response, 200
 
 
+@app.route('/whore_mentor_info', methods=['GET'])
+@jwt_required()
+def mentor_info():
+    response = {}
+
+    all_orders = db.session.query(OrderCourse, User).join(User, User.id == OrderCourse.user_id)
+
+    response['orders'] = []
+
+    for order, user in all_orders:
+        response['orders'].append(
+            {
+                'state': order.state,
+                'full_name': user.first_name,
+                'id': order.id
+            }
+        )
+
+    all_courses = Course.query.all()
+
+    response['courses'] = []
+
+    for course in all_courses:
+        response['courses'].append(
+            {
+                'name': course.name,
+                'id': course.id
+            }
+        )
+
+    all_groups = Group.query.all()
+
+    response['groups'] = []
+
+    for group in all_groups:
+        response['groups'].append(
+            {
+                'name': group.name,
+                'id': group.id
+            }
+        )
+
+    return response, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)
